@@ -85,7 +85,7 @@ public interface {interface} {{
 sql_template = '''
 create table `{table}` (
 {table_fields}
-) ENGINE=InnoDB default CHARSET=utf8mb4 collate=utf8mb4_bin;
+) engine=InnoDB default charset=utf8mb4 collate=utf8mb4_bin;
 '''
 
 
