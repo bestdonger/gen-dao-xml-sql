@@ -101,6 +101,8 @@ def _insert_if_value(field):
 
 
 def _update_if_sentence(field):
+    if field == 'updateTime':
+        return f'\t\t\tupdate_time = now(),'
     return f'\t\t\t<if test="entity.{field} != null">{camel_underline(field)} = #{{entity.{field}}},</if>'
 
 
