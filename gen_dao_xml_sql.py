@@ -7,13 +7,15 @@ def camel_underline(s):
     return re.sub('([A-Z])', '_\\1', s).lstrip('_').lower()
 
 
-xml_template = '''
+xml_template = '''\
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="{namespace}">
 
     <sql id="all_columns">
-        {all_columns}
+        <trim>
+            {all_columns}
+        </trim>
     </sql>
     
     <select id="findById" resultType="{entity_path}">
@@ -59,7 +61,8 @@ xml_template = '''
 </mapper>
 '''
 
-dao_template = '''package {package};
+dao_template = '''\
+package {package};
 
 import {entity_path};
 import org.apache.ibatis.annotations.Param;
@@ -82,7 +85,7 @@ public interface {interface} {{
 }}
 '''
 
-sql_template = '''
+sql_template = '''\
 create table `{table}` (
 {table_fields}
 ) engine=InnoDB default charset=utf8mb4 collate=utf8mb4_bin;
@@ -94,11 +97,11 @@ def _insert_if_column(field):
 
 
 def _insert_if_value(field):
-    return f'\t\t\t\t<if test="entity.{field} != null">{field},</if>'
+    return f'\t\t\t\t<if test="entity.{field} != null">#{{entity.{field}}},</if>'
 
 
 def _update_if_sentence(field):
-    return f'\t\t\t<if test="entity.{field} != null">{camel_underline(field)} = #{{{field}}},</if>'
+    return f'\t\t\t<if test="entity.{field} != null">{camel_underline(field)} = #{{entity.{field}}},</if>'
 
 
 def _sql_field(field_type_comment_item):
@@ -176,7 +179,7 @@ if __name__ == "__main__":
             field_comment = ''
 
         # 所有字段
-        all_columns = ',\n\t\t'.join(map(camel_underline, field_type_comment.keys()))
+        all_columns = ',\n\t\t\t'.join(map(camel_underline, field_type_comment.keys()))
 
         # insert相关
         insert_columns = '\n'.join(map(_insert_if_column, field_type_comment.keys()))
