@@ -12,7 +12,7 @@
 ```
 int, long, byte, short, float, double,
 Integer, Long, Byte, Short, Float, Double,
-Date, LocalDateTime, LocalDate // 这三种类型生成的sql字段类型统一为datetime(3)
+Date, LocalDateTime, LocalDate // 这三种类型生成的sql字段类型统一为datetime
 ```
 
 实体类格式

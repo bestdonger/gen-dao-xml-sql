@@ -126,8 +126,8 @@ def _sql_field(field_type_comment_item):
         column_type = 'smallint'
         column_default = 0
     elif type_comment[0] == 'Date' or type_comment[0] == 'LocalDateTime' or type_comment[0] == 'LocalDate':
-        column_type = 'datetime(3)'
-        column_default = 'now(3)'
+        column_type = 'datetime'
+        column_default = 'now()'
     elif type_comment[0] == 'Double' or type_comment[0] == 'double' \
             or type_comment[0] == 'Float' or type_comment[0] == 'float':
         column_type = 'double'
